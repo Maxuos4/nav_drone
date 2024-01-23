@@ -21,6 +21,7 @@ find_package(pluginlib REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(nav_drone_costmap_3d REQUIRED)
 
 include_directories(
   include

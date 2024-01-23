@@ -72,7 +72,7 @@ class NavDroneComputePathToPoseAction : public BT::AsyncActionNode
     std::shared_ptr<std::shared_future<GoalHandleComputePathToPose::SharedPtr>> future_goal_handle_;
     GoalHandleComputePathToPose::SharedPtr goal_handle_;
     
-    void goal_response_callback(std::shared_future<GoalHandleComputePathToPose::SharedPtr> future);
+    void goal_response_callback(GoalHandleComputePathToPose::SharedPtr goal_handle);
     void result_callback(const GoalHandleComputePathToPose::WrappedResult & result);
     
         

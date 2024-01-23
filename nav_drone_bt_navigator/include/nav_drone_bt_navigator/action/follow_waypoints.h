@@ -63,7 +63,7 @@ class NavDroneFollowWaypointsAction : public BT::AsyncActionNode
     std::shared_ptr<std::shared_future<GoalHandleFollowWaypoints::SharedPtr>> future_goal_handle_;
     GoalHandleFollowWaypoints::SharedPtr goal_handle_;
     
-    void goal_response_callback(std::shared_future<GoalHandleFollowWaypoints::SharedPtr> future);
+    void goal_response_callback(GoalHandleFollowWaypoints::SharedPtr goal_handle);
     void feedback_callback( 
       GoalHandleFollowWaypoints::SharedPtr,
       const std::shared_ptr<const FollowWaypoints::Feedback> feedback);

@@ -27,7 +27,7 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
-find_package(BehaviorTreeV3 REQUIRED)
+find_package(behaviortree_cpp_v3 REQUIRED)
 
 add_library(navigate_to_pose SHARED
   src/navigate_to_pose.cpp

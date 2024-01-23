@@ -114,10 +114,9 @@ void NavDroneComputePathToPoseAction::halt()
 }
   
 ////  ROS2 Action Client Functions ////////////////////////////////////////////
-void NavDroneComputePathToPoseAction::goal_response_callback(std::shared_future<GoalHandleComputePathToPose::SharedPtr> future)
+void NavDroneComputePathToPoseAction::goal_response_callback(GoalHandleComputePathToPose::SharedPtr goal_handle)
   {  
-    auto goal_handle = future.get();
-    if (!goal_handle) {
+    if (goal_handle == nullptr) {
       RCLCPP_ERROR(node_->get_logger(), "Goal was rejected by server");
       action_status = ActionStatus::REJECTED;
     } else {
