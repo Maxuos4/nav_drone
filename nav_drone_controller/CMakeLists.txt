@@ -28,9 +28,17 @@ find_package(pluginlib REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(action_msgs REQUIRED)
+find_package(octomap_msgs REQUIRED)
+find_package(octomap REQUIRED)
 
 
 set(dependencies
+  ament_cmake
   rclcpp
   rclcpp_action
   rclcpp_components
@@ -41,7 +49,14 @@ set(dependencies
   std_msgs
   geometry_msgs
   nav_msgs
-  pluginlib)
+  pluginlib
+  tf2_geometry_msgs
+  tf2
+  tf2_ros
+  tf2_msgs
+  action_msgs
+  octomap
+  octomap_msgs)
   
 include_directories(
   include
@@ -54,7 +69,7 @@ target_include_directories(controller_action_server PRIVATE
   $<INSTALL_INTERFACE:include>)
 target_compile_definitions(controller_action_server
   PRIVATE "NAV_DRONE_BUILDING_DLL")
-ament_target_dependencies(controller_action_server ${dependencies} )
+ament_target_dependencies(controller_action_server ${dependencies})
 
 add_library(simple_progress_checker SHARED plugins/simple_progress_checker.cpp)
 ament_target_dependencies(simple_progress_checker ${dependencies})
@@ -65,6 +80,7 @@ ament_target_dependencies(simple_goal_checker ${dependencies})
 add_library(stopped_goal_checker SHARED plugins/stopped_goal_checker.cpp)
 target_link_libraries(stopped_goal_checker simple_goal_checker)
 ament_target_dependencies(stopped_goal_checker ${dependencies})
+
 
 rclcpp_components_register_node(controller_action_server PLUGIN "nav_drone_controller::ControllerServer" EXECUTABLE controller_server)
 

@@ -27,16 +27,20 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(action_msgs REQUIRED)
 
 set(dependencies
+    ament_cmake
     rclcpp
     rclcpp_action
+    rclcpp_components
     tf2
     tf2_ros
     tf2_geometry_msgs
     nav_msgs
     geometry_msgs
     nav_drone_msgs
+    action_msgs
 )
 
 include_directories(include)

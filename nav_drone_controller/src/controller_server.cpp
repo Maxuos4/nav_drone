@@ -494,7 +494,7 @@ bool ControllerServer::isGoalReached()
   geometry_msgs::msg::PoseStamped transformed_end_pose;
   rclcpp::Duration tolerance(rclcpp::Duration::from_seconds(costmap_ros_->getTransformTollerance()));
   nav_drone_util::transformPose(
-    costmap_ros_->getTfBuffer(), costmap_ros_->getGlobalFrameID(),
+    costmap_ros_->getTfBuffer(), costmap_ros_->getGlobalFrameID(), 
     end_pose_, transformed_end_pose, tolerance);
 
   return goal_checkers_[current_goal_checker_]->isGoalReached(

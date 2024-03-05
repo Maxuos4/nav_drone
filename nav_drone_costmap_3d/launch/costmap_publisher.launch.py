@@ -39,6 +39,10 @@ def generate_launch_description():
                         {'use_velocity_scaled_lookahead_dist' : False},
                         {'robot_radius'                       : 0.5},
                         {'safety_radius'                      : 0.3}
+                       ],
+            remappings=[
+                        ('/nav_drone/map', '/octomap_full'),
+                        ('/drone/odom', '/odometry')
                        ]
     )
 

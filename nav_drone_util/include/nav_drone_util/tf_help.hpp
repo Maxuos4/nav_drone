@@ -36,7 +36,7 @@
 #include <memory>
 #include "tf2_ros/buffer.h"
 #include "geometry_msgs/msg/pose_stamped.hpp"
-#include "tf2_geometry_msgs/tf2_geometry_msgs.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 
 namespace nav_drone_util
 {

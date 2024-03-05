@@ -17,11 +17,18 @@ find_package(nav_drone_util REQUIRED)
 find_package(nav_drone_msgs REQUIRED)
 find_package(nav_drone_costmap_3d REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(rclcpp_components REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(nav_drone_costmap_3d REQUIRED)
+find_package(octomap_msgs REQUIRED)
+find_package(octomap REQUIRED)
 
 include_directories(
   include
@@ -37,8 +44,16 @@ set(dependencies
   nav_drone_costmap_3d
   geometry_msgs
   tf2
+  tf2_ros
+  tf2_msgs
   tf2_geometry_msgs
   rclcpp
+  rclcpp_action
+  rclcpp_components
+  std_msgs
+  nav_msgs
+  octomap
+  octomap_msgs
 )
 
 add_library(${library_name} SHARED
