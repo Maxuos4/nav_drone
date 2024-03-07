@@ -41,7 +41,7 @@ void SimpleProgressChecker::initialize(
   nav_drone_util::declare_parameter_if_not_declared(
     node, plugin_name + ".required_movement_radius", rclcpp::ParameterValue(0.5));
   nav_drone_util::declare_parameter_if_not_declared(
-    node, plugin_name + ".movement_time_allowance", rclcpp::ParameterValue(10.0));
+    node, plugin_name + ".movement_time_allowance", rclcpp::ParameterValue(100.0));
   // Scale is set to 0 by default, so if it was not set otherwise, set to 0
   node->get_parameter_or(plugin_name + ".required_movement_radius", radius_, 0.5);
   double time_allowance_param = 0.0;

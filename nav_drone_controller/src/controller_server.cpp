@@ -174,11 +174,11 @@ void ControllerServer::init()
         
   // Create robot velocity publisher
   publisher_ =
-    this->create_publisher<geometry_msgs::msg::Twist>("drone/cmd_vel", 1);
+    this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 1);
 
   // ROS2 Subscriptions
   odom_subscription_ = this->create_subscription<nav_msgs::msg::Odometry>(
-    "drone/odom", 10, std::bind(&ControllerServer::odom_callback, this, _1));
+    "odometry", 10, std::bind(&ControllerServer::odom_callback, this, _1));
   
   // Create the action server
   this->action_server_ = rclcpp_action::create_server<FollowPath>(
@@ -493,9 +493,51 @@ bool ControllerServer::isGoalReached()
 
   geometry_msgs::msg::PoseStamped transformed_end_pose;
   rclcpp::Duration tolerance(rclcpp::Duration::from_seconds(costmap_ros_->getTransformTollerance()));
-  nav_drone_util::transformPose(
-    costmap_ros_->getTfBuffer(), costmap_ros_->getGlobalFrameID(), 
-    end_pose_, transformed_end_pose, tolerance);
+  std::string frame = costmap_ros_->getGlobalFrameID();
+  std::shared_ptr<tf2_ros::Buffer> tf = costmap_ros_->getTfBuffer();
+
+  if (end_pose_.header.frame_id == frame) {
+    transformed_end_pose = end_pose_;
+  } else {
+
+    try {
+      tf->transform(end_pose_, transformed_end_pose, frame);
+    } catch (tf2::ExtrapolationException & ex) {
+      auto transform = tf->lookupTransform(
+        frame,
+        end_pose_.header.frame_id,
+        tf2::TimePointZero
+      );
+      if (
+        (rclcpp::Time(end_pose_.header.stamp) - rclcpp::Time(transform.header.stamp)) >
+        tolerance)
+      {
+        RCLCPP_ERROR(
+          rclcpp::get_logger("tf_help"),
+          "Transform data too old when converting from %s to %s",
+          end_pose_.header.frame_id.c_str(),
+          frame.c_str()
+        );
+        RCLCPP_ERROR(
+          rclcpp::get_logger("tf_help"),
+          "Data time: %ds %uns, Transform time: %ds %uns",
+          end_pose_.header.stamp.sec,
+          end_pose_.header.stamp.nanosec,
+          transform.header.stamp.sec,
+          transform.header.stamp.nanosec
+        );
+      } else {
+        tf2::doTransform(end_pose_, transformed_end_pose, transform);
+        return true;
+      }
+    } catch (tf2::TransformException & ex) {
+      RCLCPP_ERROR(
+        rclcpp::get_logger("tf_help"),
+        "Exception in transformPose: %s",
+        ex.what()
+      );
+    }
+  }
 
   return goal_checkers_[current_goal_checker_]->isGoalReached(
     pose.pose, transformed_end_pose.pose,
