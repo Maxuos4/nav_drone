@@ -67,7 +67,7 @@ void CostmapPublisher::init()
        
   // Declare and get parameters    
   nav_drone_util::declare_parameter_if_not_declared(
-    this, "map_frame", rclcpp::ParameterValue("map"));
+    this, "map_frame", rclcpp::ParameterValue("odom"));
   nav_drone_util::declare_parameter_if_not_declared(
     this, "robot_base_frame", rclcpp::ParameterValue("base_link"));   
   nav_drone_util::declare_parameter_if_not_declared(
@@ -131,9 +131,9 @@ void CostmapPublisher::init()
   
   // ROS2 Subscriptions
   map_subscription_ = this->create_subscription<octomap_msgs::msg::Octomap>(
-    "nav_drone/map", 10, std::bind(&CostmapPublisher::map_callback, this, _1));
+    "octomap_full", 10, std::bind(&CostmapPublisher::map_callback, this, _1));
   odom_subscription_ = this->create_subscription<nav_msgs::msg::Odometry>(
-    "drone/odom", 10, std::bind(&CostmapPublisher::odom_callback, this, _1));  
+    "odometry", 10, std::bind(&CostmapPublisher::odom_callback, this, _1));  
       
   // ROS2 Publihers
   costmap_publisher_ = this->create_publisher<nav_drone_msgs::msg::Costmap>("nav_drone/costmap", 10);  
@@ -169,7 +169,7 @@ std::pair<int, int> CostmapPublisher::get_ez_grid_pos(const octomap::point3d & g
 {
   // Now we want to work in the base_link frame to incorporate the yaw of the drone.  
   geometry_msgs::msg::PoseStamped goal_pose;
-  goal_pose.header.frame_id = "map";
+  goal_pose.header.frame_id = "odom";
   goal_pose.header.stamp = rclcpp::Time();
   goal_pose.pose.position.x = goal.x();
   goal_pose.pose.position.y = goal.y();

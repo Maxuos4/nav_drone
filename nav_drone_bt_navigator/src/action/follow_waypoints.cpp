@@ -42,7 +42,7 @@ BT::NodeStatus NavDroneFollowWaypointsAction::tick()
   for(size_t i = 0; i < msg.value().size(); i++) {
     geometry_msgs::msg::PoseStamped pose;
     pose.header.stamp = node_->now();
-    pose.header.frame_id = "map";
+    pose.header.frame_id = "odom";
     pose.pose.position.x = msg.value()[i].x;
     pose.pose.position.y = msg.value()[i].y;
     pose.pose.position.z = msg.value()[i].z;
