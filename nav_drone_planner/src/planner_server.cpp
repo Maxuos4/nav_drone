@@ -49,7 +49,7 @@ PlannerServer::PlannerServer(const rclcpp::NodeOptions & options)
     
   // Declare and get parameters    
   nav_drone_util::declare_parameter_if_not_declared(
-    this, "map_frame", rclcpp::ParameterValue("odom"));
+    this, "map_frame", rclcpp::ParameterValue("map"));
   nav_drone_util::declare_parameter_if_not_declared(
     this, "robot_base_frame", rclcpp::ParameterValue("base_link"));   
   nav_drone_util::declare_parameter_if_not_declared(

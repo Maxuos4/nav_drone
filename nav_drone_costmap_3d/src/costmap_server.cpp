@@ -169,7 +169,7 @@ std::pair<int, int> CostmapPublisher::get_ez_grid_pos(const octomap::point3d & g
 {
   // Now we want to work in the base_link frame to incorporate the yaw of the drone.  
   geometry_msgs::msg::PoseStamped goal_pose;
-  goal_pose.header.frame_id = "odom";
+  goal_pose.header.frame_id = "map";
   goal_pose.header.stamp = rclcpp::Time();
   goal_pose.pose.position.x = goal.x();
   goal_pose.pose.position.y = goal.y();

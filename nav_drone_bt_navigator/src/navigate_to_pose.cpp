@@ -80,7 +80,7 @@ public:
     
     // Read parameters
     nav_drone_util::declare_parameter_if_not_declared(
-      this, "map_frame", rclcpp::ParameterValue("odom"));
+      this, "map_frame", rclcpp::ParameterValue("map"));
     nav_drone_util::declare_parameter_if_not_declared(
       this, "minimum_battery_voltage", rclcpp::ParameterValue(13.6));  
  
