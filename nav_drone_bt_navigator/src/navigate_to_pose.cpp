@@ -90,7 +90,7 @@ public:
     
     // Subscribe to some topics
     subscription_ = this->create_subscription<sensor_msgs::msg::BatteryState>(
-      "drone/battery", 5, std::bind(&NavigationServer::battery_callback, this, std::placeholders::_1));
+      "ap/battery/battery0", 5, std::bind(&NavigationServer::battery_callback, this, std::placeholders::_1));
     
     // Create a transform listener
     tf_buffer_ =
@@ -100,7 +100,7 @@ public:
 
     this->action_server_ = rclcpp_action::create_server<NavigateToPose>(
       this,
-      "nav_drome/navigate_to_pose",
+      "nav_drone/navigate_to_pose",
       std::bind(&NavigationServer::handle_goal, this, _1, _2),
       std::bind(&NavigationServer::handle_cancel, this, _1),
       std::bind(&NavigationServer::handle_accepted, this, _1));

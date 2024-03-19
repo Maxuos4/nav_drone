@@ -37,7 +37,7 @@ BT::NodeStatus NavDroneComputePathToPoseAction::tick()
   {
       //throw BT::RuntimeError("missing required input [planner]: ", 
       //                       msg.error() );
-      planner = "ThetaStar";  //Set as a default
+      planner = "ThetaStarPlanner";  //Set as a default
   }
 
   if (!this->client_ptr_->wait_for_action_server()) {
